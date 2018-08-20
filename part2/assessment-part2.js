@@ -43,10 +43,18 @@ function noWeakLink() {
     method: 'GET',
     url: '/api/users'
   })
+  .then(res =>{
+    firstUser = res.data[0];
+    return res;
+  })
+  .then(res => {
+    thirdUser = res.data[2];
+    return res.data[9]
+  });
+
   // CODE HERE...
 
 }
-
 
 
 // *************
@@ -75,7 +83,7 @@ function large() {
 }
 // CODE HERE...
 
-
+let boundToElephant = large.bind(elephant);
 
 // *************
 // * PROBLEM 3 *
@@ -88,7 +96,9 @@ function large() {
 // and return the bound function.
 
 // CODE HERE...
-
+function deathStar(capacity, crew) {
+  return capacity.bind(crew);
+}
 
 
 // *************
@@ -103,7 +113,11 @@ function large() {
 // The closure function will return the combined value of assets and liabilities.
 
 // CODE HERE...
-
+function accountingOffice(assets) {
+  return function(liabilities) {
+    return assets + liabilities
+  }
+}
 
 
 // *************
@@ -128,7 +142,13 @@ function large() {
 // };
 
 // CODE HERE...
-
+function forgetter(name) {
+  let remember = [];
+  return function(item) {
+    remember.push(item)
+    return {name, remember}
+  }
+}
 
 
 // *************
@@ -156,3 +176,44 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+function frodo(startingHungerValue, startingDangerValue) {
+  let shv = startingHungerValue;
+  let sdv = startingDangerValue;
+  return {
+    dinnerOverFire: function() {
+      shv -= 25;
+      sdv += 40;
+      if(shv > 100) {
+        shv = 100
+      } else if(shv < 0) {
+        shv = 0;
+      }
+
+      if(sdv > 100) {
+        sdv = 100
+      } else if(sdv < 0) {
+        sdv = 0;
+      }
+
+      return {hunger: shv, danger: sdv}
+    },
+    hidingInBush: function() {
+      shv += 35;
+      sdv -= 20;
+
+      if(shv > 100) {
+        shv = 100
+      } else if(shv < 0) {
+        shv = 0;
+      }
+
+      if(sdv > 100) {
+        sdv = 100
+      } else if(sdv < 0) {
+        sdv = 0;
+      }
+
+      return {hunger: shv, danger: sdv}
+    }
+  }
+}
